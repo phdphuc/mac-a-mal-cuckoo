@@ -1,0 +1,175 @@
+<section id="static_analysis">
+    {% if analysis.static %}
+        {% if analysis.static.result %}
+            {% for binary in analysis.static.result %}
+                {% if binary.header %}
+                        
+                            <div>
+                                <h4><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Header information</h4>
+                                <div class="well">
+                                {% if binary.header.name %}
+                                    <b>{{binary.header.name}}</b><hr />
+                                {% endif %} 
+                                {% if binary.header.size %}
+                                    Header Size: {{binary.header.size}}<hr />
+                                {% endif %}
+                                {% if binary.header.arch %}
+                                    Header Arch: {{binary.header.arch}}<hr />
+                                {% endif %}
+                                {% if binary.header.subarch %}
+                                    Header subarch: {{binary.header.subarch}}<hr />
+                                {% endif %}
+                                {% if binary.header.filetype %}
+                                    File Type: {{binary.header.filetype}}<hr />
+                                {% endif %}
+                                {% if binary.header.ncmds %}
+                                    Number of load commands: {{binary.header.ncmds}}<hr />
+                                {% endif %}
+                                {% if binary.header.szcmd %}
+                                    Size of load commands: {{binary.header.szcmd}}<hr />
+                                {% endif %}
+                                {% if binary.header.flags %}
+                                    Flags: {{binary.header.flags}}<hr />
+                                {% endif %}
+                                {% if binary.EntryPoint %}
+                                    Entry Point: {{binary.EntryPoint}}<hr />
+                                {% endif %}
+                                </div>
+                            </div>
+                            <hr />
+                {% endif %}
+                {% if binary.header.sharedlibs %}
+                    <div>
+                        <h4>Shared Libraries</h4>
+                        <div id="sharedlib">
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Path</th>
+                                </tr>
+                                {% for sharedlib in binary.header.sharedlibs %}
+                                    <tr>
+                                        <td>{{sharedlib.name}}</td>
+                                        <td>{{sharedlib.path}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <hr />
+                {% endif %}
+                {% if binary.load_cmds %}
+                    <div>
+                        <h4>Load commands</h4>
+                        <div id="load_cmds">
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <th>Command</th>
+                                    <th>Details</th>
+                                </tr>
+                                {% for k, v in binary.load_cmds.items %}
+                                    <tr>
+                                        <td>{{k}}</td>
+                                        <td>{{v}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <hr />
+                {% endif %}
+                {% if binary.macho_segments %}
+                    <div>
+                        <h4>Segments</h4>
+                        <div id="macho_segments">
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Virtual Address</th>
+                                    <th>Virtual Size</th>≈
+                                    <th>Size of Raw Data</th>
+                                    <th>Segment Offest</th>
+                                    <th>Max Prot</th>
+                                    <th>Init Prot</th>
+                                    <th>Entropy</th>
+                                </tr>
+                                {% for segment in binary.macho_segments %}
+                                    <tr>
+                                        <td>{{segment.name}}</td>
+                                        <td>{{segment.virtual_address}}</td>
+                                        <td>{{segment.virtual_size}}</td>
+                                        <td>{{segment.size_of_data}}</td>
+                                        <td>{{segment.segOffest}}</td>
+                                        <td>{{segment.maxprot}}</td>
+                                        <td>{{segment.initprot}}</td>
+                                        <td>{{segment.entropy}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <hr />
+                {% endif %}
+                {% if binary.macho_sections %}
+                    <div>
+                        <h4>Sections</h4>
+                        <div id="macho_sections">
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Virtual Address</th>
+                                    <th>Virtual Size</th>
+                                    <th>Section Offest</th>
+                                    <th>Type</th>
+                                    <th>Attribute</th>
+                                </tr>
+                                {% for section in binary.macho_sections %}
+                                    <tr>
+                                        <td>[{{section.segname}}] {{section.sectname}}</td>
+                                        <td>{{section.addr}}</td>
+                                        <td>{{section.size}}</td>
+                                        <td>{{section.offset}}</td>
+                                        <td>{{section.sectType}}</td>
+                                        <td>{{section.secAttr}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <hr />
+                {% endif %}
+                {% if binary.symbols %}
+                    <div>
+                        <h4>Symbols Table</h4>
+                        <div id="symbols">
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Section Index</th>
+                                    <th>Type</th>
+                                    <th>Un</th>
+                                    <th>Value</th>
+                                </tr>
+                                {% for symbol in binary.symbols %}
+                                    <tr>
+                                        <td>{{symbol.sym}}</td>
+                                        <td>{{symbol.n_desc}}</td>
+                                        <td>{{symbol.n_sect}}</td>
+                                        <td>{{symbol.n_type}}</td>
+                                        <td>{{symbol.n_un}}</td>
+                                        <td>{{symbol.n_value}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <hr />
+                {% endif %}
+
+            {% endfor %}
+        {% endif %}
+    {% else %}
+        Nothing to display.
+    {% endif %}
+</section>
