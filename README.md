@@ -31,7 +31,13 @@ macOS versions supported 10.6, 10.7, 10.8, 10.9, 10.10, 10.11, 10.12, and 10.13 
  1. Guest machine can be setup manually using VMWare or VirtualBox. ([OSX 10.8](https://drive.google.com/file/d/0BxBVjisqLRIrSTRySWJJUUlRZm8/view) - password: summer)
  [Documentation]( https://github.com/rodionovd/cuckoo-osx-analyzer/wiki/Setting-up-the-environment ) for setting up the environment.
  2. Download the Mac-a-mal for [guest machine monitor](https://github.com/phdphuc/mac-a-mal), compile 2 binaries using Xcode: mac-a-mal.kext and grey-cuckoo. The agent in user-mode requires libevent for multithreading.
- 3. Start the monitor and agent in super-user privilege is recommended. 
+ 3. Install dependencies:
+ ```
+ sudo pip install pymongo
+ brew install libtiff libjpeg webp little-cms2
+ pip install Pillow
+ ```
+ 4. Start the monitor and agent in super-user privilege is recommended. 
  
 ``` homebrew libevent &&
  sudo chown -R root:wheel mac-a-mal.kext &&
@@ -41,7 +47,7 @@ macOS versions supported 10.6, 10.7, 10.8, 10.9, 10.10, 10.11, 10.12, and 10.13 
  sudo python ./agent.py
  ```
  
-4. Take the snapshot of the guest machine
+5. Take the snapshot of the guest machine
 
 ## Credits
 
