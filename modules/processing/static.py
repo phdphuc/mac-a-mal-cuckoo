@@ -276,7 +276,7 @@ class MachOExecutable(object):
             binaries["header"] = headers
             binaries["load_cmds"] = load_cmds
             binaries["symbols"] = symbols
-            result.append(binaries)
+            result.append(binaries.copy())
         results["result"] = result
         return results
 
